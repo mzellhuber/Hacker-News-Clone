@@ -22,6 +22,8 @@ const resolvers = {
     },
     
   },
+
+
   Mutation: {
     // 2
     post: (root, args) => {
@@ -31,6 +33,34 @@ const resolvers = {
         url: args.url,
       }
       links.push(link)
+      return link
+    },
+    updateLink: (root, args) => {
+      const link = links.find(item => {
+         return item.id == args.id
+
+      });
+      if (!link) {
+        throw new Error('Could not find link with id ${linkId}')
+      };
+      link.url = args.url;
+      link.description = args.description;
+
+      return link;
+    },
+    deleteLink:(root, args) => {
+      const link = links.find(item => {
+         return item.id == args.id
+
+      });
+      if (!link) {
+        throw new Error('Could not find link with id ${linkId}')
+      };
+      console.log(links)
+      //delete links[link];
+      links.splice(links.indexOf(link), 1);
+
+      console.log(links)
       return link
     }
   },
